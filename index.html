@@ -526,7 +526,7 @@
 
         // Validate per-policy minimums
         const unmet = ACCESS_POLICIES.filter(p => (required[p.policyId] || 0) < p.minAssets);
-
+        
       if (unmet.length === 0) {
         const detail = buildRequirementsDetail(required);
 
@@ -542,21 +542,23 @@
         // SHOW PROTECTED AREA, HIDE GATE
         protectedArea.classList.remove('hidden');
         gateOverlay.classList.add('hidden');
-        } else {
-          const detail = buildRequirementsDetail(required);
+      } else {
+        const detail = buildRequirementsDetail(required);
 
-          walletStatus.textContent = detail;
+        walletStatus.textContent = detail;
 
-          accessMessage.classList.add('error');
-          accessMessage.innerHTML =
-            `You don’t yet meet the LOC holder requirements.<br>` +
-            `<a href="${getPrimaryPurchaseUrl()}" target="_blank" rel="noopener noreferrer">
-              Purchase Assets
-            </a> or Pay 5₳ for 30 days access below.`;
+        accessMessage.classList.add('error');
+        accessMessage.innerHTML =
+          `You don’t yet meet the LOC holder requirements.<br>` +
+          `<a href="${getPrimaryPurchaseUrl()}" target="_blank" rel="noopener noreferrer">
+             Purchase Assets
+           </a> or Pay 5₳ for 30 days access below.`;
 
-          // Show the 5₳ button
-          payAccessBtn.classList.remove('hidden');
-        }
+        // Make absolutely sure the button is visible
+        payAccessBtn.classList.remove('hidden');
+        payAccessBtn.style.display = 'inline-flex';
+      }
+
 
       } catch (err) {
         console.error(err);
