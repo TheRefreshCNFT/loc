@@ -234,6 +234,20 @@
       box-shadow: 0 14px 30px rgba(0, 0, 0, 0.7);
     }
 
+    #payAccessBtn {
+  margin-top: 0.75rem;
+  background: linear-gradient(135deg, #21cbf3, #7cffb3);
+  color: #050814;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+  border-radius: 999px;
+}
+
+    #payAccessBtn:hover {
+      transform: translateY(-1px) scale(1.01);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
+    }
+
+
     #walletStatus {
       background: rgba(9, 16, 40, 0.9);
       border-radius: 999px;
@@ -334,9 +348,6 @@
       <h2 class="loc-title">
         Links On-Chain <span class="loc-title-accent">(LOC)</span>
       </h2>
-      <p class="loc-subtitle">
-        Access granted via LOC gate. Welcome in. ✨
-      </p>
     </header>
 
     <section class="loc-status-block">
@@ -346,13 +357,13 @@
     </section>
 
     <section id="locAppShell" class="loc-app-shell">
-      <!-- LOC app content / UI will go here in later steps -->
       <div class="loc-placeholder">
         <p>LOC is ready to load here. 🎯</p>
       </div>
     </section>
   </div>
 </div>
+
 
   <!-- WALLET GATE OVERLAY -->
   <div id="gateOverlay">
@@ -376,18 +387,30 @@
       </div>
     </header>
 
-    <div class="container">
-      <div class="card">
-        <h2>Access Gate</h2>
-        <p id="gateBlurb"></p>
-        <p id="accessMessage" class="access-message"></p>
-      </div>
-    </div>
+<div class="container">
+  <div class="card">
+    <h2>Access Gate</h2>
+    <!-- Short, static pricing text lives on the gate -->
+    <p class="access-message">
+      The Refresh hodlers have no access charge. 5₳ for 30 days access for all others.
+    </p>
+
+    <p id="gateBlurb"></p>
+    <p id="accessMessage" class="access-message"></p>
+
+    <!-- Shown only if policy requirements are NOT met -->
+    <button id="payAccessBtn" class="hidden">
+      Pay 5₳ for 30 days access
+    </button>
+  </div>
+</div>
+
   </div>
 
   <!-- Wallet connector gate (your working code, only policy check upgraded to use an array + per-policy counts) -->
   <script type="module">
-    import { BrowserWallet } from 'https://esm.sh/@meshsdk/core@1.9.0-beta.62?bundle';
+    import { BrowserWallet, Transaction } from 'https://esm.sh/@meshsdk/core@1.9.0-beta.62?bundle';
+
 
     const sel           = document.getElementById('walletSelect');
     const btn           = document.getElementById('connectBtn');
@@ -399,6 +422,10 @@
     const instructionsEl = document.getElementById('instructions');
     const gateBlurbEl    = document.getElementById('gateBlurb');
     const connectRow     = document.getElementById('connectRow');
+    const payAccessBtn   = document.getElementById('payAccessBtn');
+
+//platform receiving
+    const GATE_RECIPIENT_ADDRESS = 'addr1q9m2reerla2ccrkwz57rhwl7q8vj8y38x39nv4mq56ppjqmzs7jlke6nm3thlvvddtsnp52s62u0337y9h6d2gmma2wsmjx8nh';
 
     // =========================================================
     // Fre5h Fence access requirements (EDIT THESE AT THE TOP)
@@ -438,8 +465,11 @@
     }
 
     // Set gate text from the variables above (so you only edit in one place)
-    instructionsEl.textContent = `Connect a Cardano wallet that holds at least ${buildRequirementsLine()}.`;
-    gateBlurbEl.textContent = `Fre5h Fence Activated!! Access requires the connected wallet to hold at least ${buildRequirementsLine()}.`;
+  instructionsEl.textContent = `Connect a Cardano wallet to continue.`;
+  gateBlurbEl.textContent =
+    `If your wallet holds at least ${buildRequirementsLine()}, you have VIP LOC access. ` +
+    `Otherwise, you can unlock 30 days access for 5₳.`;
+
 
     async function detect() {
       try {
@@ -497,17 +527,21 @@
         // Validate per-policy minimums
         const unmet = ACCESS_POLICIES.filter(p => (required[p.policyId] || 0) < p.minAssets);
 
-        if (unmet.length === 0) {
-          const detail = buildRequirementsDetail(required);
+      if (unmet.length === 0) {
+        const detail = buildRequirementsDetail(required);
 
-          walletStatus.textContent =
-            `✅ Access granted.\n${detail}`;
+        walletStatus.textContent =
+          `✅ Access granted.\n${detail}`;
 
-          accessMessage.innerHTML = `<strong>Access granted. Loading Fre5h Fence…</strong>`;
+        accessMessage.classList.remove('error');
+        accessMessage.innerHTML = `<strong>Access granted. Loading LOC…</strong>`;
 
-          // SHOW PROTECTED AREA, HIDE GATE
-          protectedArea.classList.remove('hidden');
-          gateOverlay.classList.add('hidden');
+        // Hide the 5₳ button because they don't need it
+        payAccessBtn.classList.add('hidden');
+
+        // SHOW PROTECTED AREA, HIDE GATE
+        protectedArea.classList.remove('hidden');
+        gateOverlay.classList.add('hidden');
         } else {
           const detail = buildRequirementsDetail(required);
 
@@ -515,10 +549,15 @@
 
           accessMessage.classList.add('error');
           accessMessage.innerHTML =
+            `You don’t yet meet the LOC holder requirements.<br>` +
             `<a href="${getPrimaryPurchaseUrl()}" target="_blank" rel="noopener noreferrer">
-               Purchase Assets
-             </a>`;
+              Purchase Assets
+            </a> or Pay 5₳ for 30 days access below.`;
+
+          // Show the 5₳ button
+          payAccessBtn.classList.remove('hidden');
         }
+
       } catch (err) {
         console.error(err);
         walletStatus.textContent = 'Error checking wallet assets.';
@@ -526,6 +565,64 @@
         accessMessage.textContent = 'An error occurred while checking your wallet. Please try again.';
       }
     }
+
+    async function payForLocAccess() {
+  if (!meshWallet) {
+    alert('Connect a wallet first.');
+    return;
+  }
+
+  if (!GATE_RECIPIENT_ADDRESS || GATE_RECIPIENT_ADDRESS.includes('addr1q9m2reerla2ccrkwz57rhwl7q8vj8y38x39nv4mq56ppjqmzs7jlke6nm3thlvvddtsnp52s62u0337y9h6d2gmma2wsmjx8nh')) {
+    alert('LOC gate recipient address is not configured yet.\n\nPlease set GATE_RECIPIENT_ADDRESS in the code.');
+    return;
+  }
+
+  try {
+    payAccessBtn.disabled = true;
+    payAccessBtn.textContent = 'Preparing payment…';
+    accessMessage.classList.remove('error');
+    accessMessage.textContent = 'Building 5₳ LOC access transaction…';
+
+    // Build a simple 5₳ payment tx to your gate address
+    const tx = new Transaction({ initiator: meshWallet });
+
+    // 5 ADA = 5,000,000 lovelace
+    tx.sendLovelace(GATE_RECIPIENT_ADDRESS, '5000000');
+
+    // Make sure change returns to the connected wallet
+    if (!userAddress) {
+      userAddress = await meshWallet.getChangeAddress();
+    }
+    tx.setChangeAddress(userAddress);
+
+    const unsignedTx = await tx.build();
+    const signedTx   = await meshWallet.signTx(unsignedTx);
+    const txHash     = await meshWallet.submitTx(signedTx);
+
+    console.log('[LOC] Access payment tx hash:', txHash);
+
+    walletStatus.textContent = `LOC access paid. Tx: ${txHash}`;
+    accessMessage.classList.remove('error');
+    accessMessage.innerHTML = `<strong>Access granted. Welcome to LOC.</strong>`;
+
+    // For now, once paid, let them in immediately.
+    protectedArea.classList.remove('hidden');
+    gateOverlay.classList.add('hidden');
+  } catch (err) {
+    console.error('[LOC] payForLocAccess error:', err);
+    accessMessage.classList.add('error');
+    accessMessage.textContent =
+      'Payment failed or was rejected. No funds were taken. You can try again.';
+  } finally {
+    payAccessBtn.disabled = false;
+    payAccessBtn.textContent = 'Pay 5₳ for 30 days access';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', detect);
+btn.addEventListener('click', connect);
+payAccessBtn.addEventListener('click', payForLocAccess);
+
 
     async function connect() {
       const walletId = sel.value; // e.g. "vespr", "nami", "eternl", etc.
@@ -564,11 +661,7 @@
         btn.disabled = false;
       }
     }
-
-    document.addEventListener('DOMContentLoaded', detect);
-    btn.addEventListener('click', connect);
   </script>
 
 </body>
 </html>
-
