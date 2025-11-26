@@ -326,34 +326,31 @@
 </head>
 <body>
 
-<!-- LOC gated content shell -->
-<div id="locGateContainer" class="loc-container">
-  <header class="loc-header">
-    <h2 class="loc-title">
-      Links On-Chain <span class="loc-title-accent">(LOC)</span>
-    </h2>
-    <p class="loc-subtitle">
-      The Refresh hodlers have no access charge. 5₳ for 30 days access for all others.
-    </p>
-  </header>
+<!-- Gated area wrapper (shown only after access granted) -->
+<div id="protectedArea" class="hidden">
+  <!-- LOC gated content shell -->
+  <div id="locGateContainer" class="loc-container">
+    <header class="loc-header">
+      <h2 class="loc-title">
+        Links On-Chain <span class="loc-title-accent">(LOC)</span>
+      </h2>
+      <p class="loc-subtitle">
+        The Refresh hodlers have no access charge. 5₳ for 30 days access for all others.
+      </p>
+    </header>
 
-  <section class="loc-status-block">
-    <p id="locStatusMessage" class="loc-status loc-status-ok">
-      Access granted. Welcome to LOC.
-    </p>
-    <!--
-      In the next steps, when we wire up paid access, we’ll:
-      - Change this text based on state
-      - Show a “Pay 5₳ for 30 days access” button when needed
-    -->
-  </section>
+    <section class="loc-status-block">
+      <p id="locStatusMessage" class="loc-status loc-status-ok">
+        Access granted. Welcome to LOC.
+      </p>
+    </section>
 
-  <section id="locAppShell" class="loc-app-shell">
-    <!-- LOC app content / UI will go here in later steps -->
-    <div class="loc-placeholder">
-      <p>LOC is ready to load here. 🎯</p>
-    </div>
-  </section>
+    <section id="locAppShell" class="loc-app-shell">
+      <div class="loc-placeholder">
+        <p>LOC is ready to load here. 🎯</p>
+      </div>
+    </section>
+  </div>
 </div>
 
 
