@@ -437,7 +437,8 @@
   ];
   // =========================================================
 
-  let meshWallet, userAddress;
+let meshWallet, userAddress, userIdentity;
+
 
   function buildRequirementsLine() {
     return ACCESS_POLICIES
@@ -490,6 +491,60 @@
     }
   }
 
+  async function checkPaidAccessStatus() {
+  if (!userIdentity) return null;
+
+  try {
+    const res = await fetch('loc_access.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'check',
+        identity: userIdentity,
+      }),
+    });
+
+    if (!res.ok) {
+      console.error('[LOC] checkPaidAccessStatus HTTP error:', res.status);
+      return null;
+    }
+
+    const data = await res.json();
+    console.log('[LOC] checkPaidAccessStatus response:', data);
+
+    if (data.status === 'active') {
+      return data; // { status, lastPaidDate, expiresOn }
+    }
+
+    return null;
+  } catch (err) {
+    console.error('[LOC] checkPaidAccessStatus error:', err);
+    return null;
+  }
+}
+
+async function logPaidAccess(txHash) {
+  if (!userIdentity) return;
+
+  try {
+    const res = await fetch('loc_access.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        action: 'log',
+        identity: userIdentity,
+        txHash,
+      }),
+    });
+
+    const data = await res.json().catch(() => null);
+    console.log('[LOC] logPaidAccess response:', data);
+  } catch (err) {
+    console.error('[LOC] logPaidAccess error:', err);
+  }
+}
+
+
   async function checkPolicyAssets() {
     if (!meshWallet) return;
 
@@ -534,6 +589,29 @@
         const detail = buildRequirementsDetail(required);
         walletStatus.textContent = detail;
 
+        // NEW: check if this wallet already has an active 30-day pass
+        let passInfo = null;
+        if (userIdentity) {
+          passInfo = await checkPaidAccessStatus();
+        }
+
+        if (passInfo && passInfo.status === 'active') {
+          // They paid in the last 30 days – let them in without paying again
+          walletStatus.textContent =
+            `LOC access active (5₳ pass).\nExpires: ${passInfo.expiresOn}`;
+
+          accessMessage.classList.remove('error');
+          accessMessage.innerHTML =
+            `<strong>Access granted via paid LOC pass. Loading LOC…</strong>`;
+
+          payAccessBtn.style.display = 'none';
+
+          protectedArea.classList.remove('hidden');
+          gateOverlay.classList.add('hidden');
+          return;
+        }
+
+        // No active pass -> show Purchase/Pay options as before
         accessMessage.classList.add('error');
         accessMessage.innerHTML =
           `You don’t yet meet the LOC holder requirements.<br>` +
@@ -544,6 +622,7 @@
         // Make absolutely sure the button is visible
         payAccessBtn.style.display = 'inline-flex';
       }
+
     } catch (err) {
       console.error(err);
       walletStatus.textContent = 'Error checking wallet assets.';
@@ -585,6 +664,9 @@
 
       console.log('[LOC] Access payment tx hash:', txHash);
 
+      // NEW: log this payment as a 30-day pass
+      await logPaidAccess(txHash);
+
       walletStatus.textContent = `LOC access paid. Tx: ${txHash}`;
       accessMessage.classList.remove('error');
       accessMessage.innerHTML = `<strong>Access granted. Welcome to LOC.</strong>`;
@@ -613,13 +695,28 @@
     btn.textContent = 'Connecting…';
 
     try {
-      meshWallet = await BrowserWallet.enable(walletId);
-      userAddress = await meshWallet.getChangeAddress();
+    meshWallet = await BrowserWallet.enable(walletId);
+    userAddress = await meshWallet.getChangeAddress();
 
-      btn.textContent = `Connected: ${walletId}`;
-      sel.disabled = true;
+    // Try to use the reward (stake) address as the login identity, fallback to payment address
+    try {
+      const rewardAddrs = await meshWallet.getRewardAddresses?.();
+      if (Array.isArray(rewardAddrs) && rewardAddrs.length > 0) {
+        userIdentity = rewardAddrs[0];
+      } else {
+        userIdentity = userAddress;
+      }
+    } catch (e) {
+      console.warn('[LOC] getRewardAddresses not available, using payment address as identity.');
+      userIdentity = userAddress;
+    }
 
-      await checkPolicyAssets();
+    btn.textContent = `Connected: ${walletId}`;
+    sel.disabled = true;
+
+    // Run the policy check right after connection
+    await checkPolicyAssets();
+
     } catch (e) {
       console.error('Wallet connection failed:', e);
 
