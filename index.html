@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width,initial-scale=1"/>
-  <title>LOC</title>
+  <title>Linkz</title>
   <style>
     :root {
       --gap: 1rem;
@@ -148,7 +148,7 @@
       margin-top: 1rem;
       font-size: 1rem;
       color: var(--text-light);
-      white-space: pre-line; /* allows \n to display nicely */
+      white-space: pre-line;
     }
 
     .access-message strong { color: var(--success); }
@@ -324,6 +324,229 @@
       text-align: center;
     }
 
+    .loc-main {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+      gap: 1.25rem;
+      width: 100%;
+    }
+
+    .loc-column {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .loc-card {
+      background: rgba(5, 12, 28, 0.95);
+      border-radius: 0.9rem;
+      border: 1px solid rgba(120, 141, 255, 0.2);
+      padding: 1rem 1.1rem;
+      font-size: 0.9rem;
+    }
+
+    .loc-card h3 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+      font-size: 1rem;
+    }
+
+    .loc-field {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+      margin-bottom: 0.75rem;
+      font-size: 0.85rem;
+    }
+
+    .loc-field span {
+      opacity: 0.85;
+    }
+
+    .loc-field input,
+    .loc-field textarea {
+      background: rgba(3, 7, 20, 0.9);
+      border: 1px solid rgba(96, 125, 255, 0.5);
+      border-radius: 0.6rem;
+      padding: 0.55rem 0.7rem;
+      font-size: 0.9rem;
+      color: #e4e8ff;
+    }
+
+    .loc-field textarea {
+      resize: vertical;
+    }
+
+    .loc-links-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.35rem;
+      font-size: 0.85rem;
+    }
+
+    .loc-links-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .loc-link-row {
+      display: grid;
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.2fr) auto;
+      gap: 0.35rem;
+      align-items: center;
+    }
+
+    .loc-link-row input {
+      background: rgba(3, 7, 20, 0.9);
+      border: 1px solid rgba(96, 125, 255, 0.4);
+      border-radius: 0.6rem;
+      padding: 0.4rem 0.6rem;
+      font-size: 0.85rem;
+      color: #e4e8ff;
+    }
+
+    .loc-link-remove {
+      background: transparent;
+      border-radius: 999px;
+      border: 1px solid rgba(255, 140, 148, 0.7);
+      color: #ff8b94;
+      padding: 0.25rem 0.5rem;
+      font-size: 0.75rem;
+      cursor: pointer;
+    }
+
+    .loc-btn-primary,
+    .loc-btn-secondary {
+      border-radius: 999px;
+      padding: 0.55rem 1rem;
+      font-size: 0.9rem;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.35rem;
+    }
+
+    .loc-btn-primary {
+      background: linear-gradient(135deg, #ff3366, #ffc857);
+      color: #050814;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.7);
+      margin-top: 0.25rem;
+    }
+
+    .loc-btn-primary:hover {
+      transform: translateY(-1px) scale(1.01);
+    }
+
+    .loc-btn-secondary {
+      background: rgba(10, 18, 46, 0.9);
+      color: #e4e8ff;
+      border: 1px solid rgba(120, 141, 255, 0.6);
+    }
+
+    .loc-metadata-preview {
+      max-height: 260px;
+      overflow: auto;
+      font-size: 0.75rem;
+      background: rgba(0, 0, 0, 0.45);
+      padding: 0.5rem 0.75rem;
+      border-radius: 0.5rem;
+    }
+
+    .loc-card-preview {
+      font-size: 0.85rem;
+    }
+
+    .loc-card-title {
+      margin: 0 0 0.35rem;
+      font-size: 1rem;
+    }
+
+    .loc-card-bio {
+      margin: 0 0 0.35rem;
+      opacity: 0.85;
+    }
+
+    .loc-card-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .loc-card-links li {
+      padding: 0.15rem 0;
+    }
+
+    .loc-tx-status {
+      margin-top: 0.5rem;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    /* IMAGE SECTION */
+    .loc-image-section {
+      margin: 0.75rem 0 1rem;
+      font-size: 0.85rem;
+    }
+
+    .loc-field-label {
+      display: block;
+      margin-bottom: 0.35rem;
+      opacity: 0.9;
+    }
+
+    .loc-image-mode-row {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.8rem;
+      opacity: 0.9;
+    }
+
+    .loc-image-mode-row label {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .loc-image-fields {
+      margin-top: 0.35rem;
+    }
+
+    .loc-hint {
+      font-size: 0.75rem;
+      opacity: 0.75;
+    }
+
+    /* LINKS SECTION EXTRA */
+    .loc-hidden-link-types {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.75rem;
+      opacity: 0.9;
+    }
+
+    .loc-hidden-link-chip {
+      border-radius: 999px;
+      border: 1px dashed rgba(120, 141, 255, 0.7);
+      padding: 0.2rem 0.55rem;
+      background: transparent;
+      color: #e4e8ff;
+      cursor: pointer;
+    }
+
+    @media (max-width: 800px) {
+      .loc-main {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
     @media (max-width: 600px) {
       header .container { padding-top: 1.5rem; }
       header h1 { font-size: 1.9rem; }
@@ -343,10 +566,10 @@
   <div id="locGateContainer" class="loc-container">
     <header class="loc-header">
       <h2 class="loc-title">
-        Links On-Chain <span class="loc-title-accent">(LOC)</span>
+        Linkz <span class="loc-title-accent">(LOC)</span>
       </h2>
       <p class="loc-subtitle">
-        Access granted via LOC gate. Welcome in. ✨
+        Access granted via Linkz gate. Welcome in. ✨
       </p>
     </header>
 
@@ -357,10 +580,138 @@
     </section>
 
     <section id="locAppShell" class="loc-app-shell">
-      <div class="loc-placeholder">
-        <p>LOC is ready to load here. 🎯</p>
+      <div class="loc-main">
+        <!-- LEFT COLUMN: profile + editor -->
+        <div class="loc-column">
+          <div class="loc-card">
+            <h3>Your Linkz Profile</h3>
+            <p><strong>Connected wallet:</strong> <span id="locWalletShort">–</span></p>
+            <p><strong>Access type:</strong> <span id="locAccessType">–</span></p>
+            <p><strong>Linkz policy ID:</strong> <code id="locPolicyId">–</code></p>
+            <button id="locDownloadPolicyBtn" class="loc-btn-secondary">
+              Download policy.json
+            </button>
+          </div>
+
+          <div class="loc-card">
+            <h3>Linkz setup</h3>
+
+            <label class="loc-field">
+              <span>Profile title</span>
+              <input id="locTitleInput" type="text" placeholder="My Linkz" />
+            </label>
+
+            <label class="loc-field">
+              <span>Short bio / tagline</span>
+              <textarea id="locBioInput" rows="2" placeholder="Artist, builder, degen…"></textarea>
+            </label>
+
+            <label class="loc-field">
+              <span>Asset name (ASCII)</span>
+              <input id="locAssetNameInput" type="text" value="Linkz" readonly />
+            </label>
+
+            <!-- IMAGE SECTION -->
+            <div class="loc-image-section">
+              <span class="loc-field-label">Cover image (required)</span>
+              <div class="loc-image-mode-row">
+                <label>
+                  <input type="radio" name="locImageMode" value="url" checked>
+                  IPFS / URL
+                </label>
+                <label>
+                  <input type="radio" name="locImageMode" value="base64">
+                  On-chain base64
+                </label>
+              </div>
+
+              <div id="locImageUrlFields" class="loc-image-fields">
+                <label class="loc-field">
+                  <span>Image URL (ipfs:// or https://)</span>
+                  <input id="locImageUrlInput" type="text" placeholder="ipfs://... or https://..." />
+                </label>
+                <label class="loc-field">
+                  <span>Image media type</span>
+                  <select id="locImageMediaTypeSelect">
+                    <option value="image/png">image/png</option>
+                    <option value="image/jpeg">image/jpeg</option>
+                    <option value="image/svg+xml">image/svg+xml</option>
+                    <option value="image/gif">image/gif</option>
+                    <option value="image/webp">image/webp</option>
+                  </select>
+                </label>
+              </div>
+
+              <div id="locImageBase64Fields" class="loc-image-fields hidden">
+                <label class="loc-field">
+                  <span>Base64 data URL (data:image/...;base64,...)</span>
+                  <textarea id="locImageBase64Input" rows="4"
+                    placeholder="Paste full data URL here (including data:image/...;base64,)"></textarea>
+                </label>
+                <p class="loc-hint">
+                  This will be split into JSON array lines of 64 characters for the <code>image</code> field.
+                </p>
+              </div>
+            </div>
+
+            <!-- LINKS SECTION -->
+            <div class="loc-links-header">
+              <span>Links</span>
+              <button type="button" id="locAddLinkBtn" class="loc-btn-secondary">+ Add link</button>
+            </div>
+
+            <div id="locLinksContainer" class="loc-links-container">
+              <!-- rows injected by JS -->
+            </div>
+
+            <div id="locHiddenLinkTypes" class="loc-hidden-link-types">
+              <!-- "Add X / Add Discord ..." chips go here when removed -->
+            </div>
+
+            <!-- NEW: export/import buttons + hidden file input -->
+            <div class="loc-field">
+              <div style="display:flex; flex-wrap:wrap; gap:0.5rem;">
+                <button type="button" id="locExportJsonBtn" class="loc-btn-secondary">
+                  Export metadata.json
+                </button>
+                <button type="button" id="locImportJsonBtn" class="loc-btn-secondary">
+                  Import metadata.json
+                </button>
+                <input type="file" id="locImportFile" accept="application/json" class="hidden">
+              </div>
+            </div>
+            <!-- END NEW -->
+
+            <button type="button" id="locSaveOnChainBtn" class="loc-btn-primary">
+              Save Linkz On-Chain
+            </button>
+
+            <p id="locTxStatus" class="loc-tx-status"></p>
+          </div>
+        </div>
+
+        <!-- RIGHT COLUMN: previews -->
+        <div class="loc-column">
+          <div class="loc-card">
+            <h3>CIP-25 metadata preview</h3>
+            <pre id="locMetadataPreview" class="loc-metadata-preview">{}</pre>
+          </div>
+
+          <div class="loc-card">
+            <h3>Card preview</h3>
+            <div id="locCardPreview" class="loc-card-preview">
+              <h4 class="loc-card-title">My links</h4>
+              <p class="loc-card-bio">Your bio goes here.</p>
+              <ul class="loc-card-links">
+                <li>Example link 1</li>
+                <li>Example link 2</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
+
   </div>
 </div>
 
@@ -370,7 +721,7 @@
 
   <header>
     <div class="container">
-      <h1>Links On-Chain Access</h1>
+      <h1>Linkz Access</h1>
 
       <p id="description">Exclusive entry discounts for peeps who get Fre5h! 🔄</p>
       <p id="instructions"></p>
@@ -389,7 +740,6 @@
   <div class="container">
     <div class="card">
       <h2>Access Gate</h2>
-      <!-- Short, static pricing text lives on the gate -->
       <p class="access-message">
         The Refresh hodlers have no access charge. 5₳ for 30 days access for all others.
       </p>
@@ -406,92 +756,118 @@
 </div>
 
 <script type="module">
-  import { BrowserWallet, Transaction } from 'https://esm.sh/@meshsdk/core@1.9.0-beta.62?bundle';
+import {
+  BrowserWallet,
+  Transaction,
+  ForgeScript,
+  resolveScriptHash,
+} from 'https://esm.sh/@meshsdk/core@1.9.0-beta.62?bundle';
 
-  const sel           = document.getElementById('walletSelect');
-  const btn           = document.getElementById('connectBtn');
-  const walletStatus  = document.getElementById('walletStatus');
-  const accessMessage = document.getElementById('accessMessage');
-  const gateOverlay   = document.getElementById('gateOverlay');
-  const protectedArea = document.getElementById('protectedArea');
+const sel           = document.getElementById('walletSelect');
+const btn           = document.getElementById('connectBtn');
+const walletStatus  = document.getElementById('walletStatus');
+const accessMessage = document.getElementById('accessMessage');
+const gateOverlay   = document.getElementById('gateOverlay');
+const protectedArea = document.getElementById('protectedArea');
 
-  const instructionsEl = document.getElementById('instructions');
-  const gateBlurbEl    = document.getElementById('gateBlurb');
-  const connectRow     = document.getElementById('connectRow');
-  const payAccessBtn   = document.getElementById('payAccessBtn');
+const instructionsEl = document.getElementById('instructions');
+const gateBlurbEl    = document.getElementById('gateBlurb');
+const connectRow     = document.getElementById('connectRow');
+const payAccessBtn   = document.getElementById('payAccessBtn');
 
-  // TODO: replace with your real receive address (no extra text)
-  const GATE_RECIPIENT_ADDRESS =
-    'addr1q9m2reerla2ccrkwz57rhwl7q8vj8y38x39nv4mq56ppjqmzs7jlke6nm3thlvvddtsnp52s62u0337y9h6d2gmma2wsmjx8nh';
+// TODO: replace with your real receive address (no extra text)
+const GATE_RECIPIENT_ADDRESS =
+  'addr1q9m2reerla2ccrkwz57rhwl7q8vj8y38x39nv4mq56ppjqmzs7jlke6nm3thlvvddtsnp52s62u0337y9h6d2gmma2wsmjx8nh';
 
-  // =========================================================
-  // Fre5h Fence / LOC holder access requirements
-  // =========================================================
-  const ACCESS_POLICIES = [
-    {
-      policyId: 'adc5716393953403109c335e68c0384238fd19653e960e03afa1fb1f',
-      minAssets: 5,
-      label: 'OG The Refresh',
-      purchaseUrl: 'https://www.jpg.store/collection/therefresh'
-    }
-  ];
-  // =========================================================
+// =========================================================
+// Fre5h Fence / LOC holder access requirements
+// =========================================================
+const ACCESS_POLICIES = [
+  {
+    policyId: 'adc5716393953403109c335e68c0384238fd19653e960e03afa1fb1f',
+    minAssets: 5,
+    label: 'OG The Refresh',
+    purchaseUrl: 'https://www.jpg.store/collection/therefresh'
+  }
+];
+// =========================================================
+
+// Standard social / site link types for Linkz
+const STANDARD_LINK_TYPES = [
+  { key: 'x',        label: 'X' },
+  { key: 'discord',  label: 'Discord' },
+  { key: 'telegram', label: 'Telegram' },
+  { key: 'youtube',  label: 'YouTube' },
+  { key: 'tiktok',   label: 'TikTok' },
+  { key: 'website',  label: 'Website' },
+];
 
 let meshWallet, userAddress, userIdentity;
+// LOC-specific state
+let locInitialized = false;
+let locPolicyId = null;
+let locForgingScript = null;
+let locAccessMode = null; // 'holder' | 'pass'
+let locKeyHash = null;    // key hash stored (not shown on screen)
+// Snapshot of the last rendered preview – SINGLE SOURCE for minting
+let locLastPreviewCip25 = null;
+let locLastPreviewAssetMetadata = null;
+let locLastPreviewAssetName = '';
+let locLastPreviewImageError = null;
 
 
-  function buildRequirementsLine() {
-    return ACCESS_POLICIES
-      .map(p => `${p.minAssets} ${p.label}`)
-      .join(' + ');
-  }
+function buildRequirementsLine() {
+  return ACCESS_POLICIES
+    .map(p => `${p.minAssets} ${p.label}`)
+    .join(' + ');
+}
 
-  function buildRequirementsDetail(foundMap) {
-    return ACCESS_POLICIES
-      .map(p => {
-        const found = foundMap[p.policyId] ?? 0;
-        return `${p.label}: ${found} / ${p.minAssets}`;
-      })
-      .join('\n');
-  }
+function buildRequirementsDetail(foundMap) {
+  return ACCESS_POLICIES
+    .map(p => {
+      const found = foundMap[p.policyId] ?? 0;
+      return `${p.label}: ${found} / ${p.minAssets}`;
+    })
+    .join('\n');
+}
 
-  function getPrimaryPurchaseUrl() {
-    return (ACCESS_POLICIES[0] && ACCESS_POLICIES[0].purchaseUrl) || 'https://www.jpg.store/';
-  }
+function getPrimaryPurchaseUrl() {
+  return (ACCESS_POLICIES[0] && ACCESS_POLICIES[0].purchaseUrl) || 'https://www.jpg.store/';
+}
 
-  // Set gate text
-  instructionsEl.textContent = `Connect a Cardano wallet to continue.`;
-  gateBlurbEl.textContent =
-    `If your wallet holds at least ${buildRequirementsLine()}, you have VIP LOC access. ` +
-    `Otherwise, you can unlock 30 days access for 5₳.`;
+// Set gate text
+instructionsEl.textContent = `Connect a Cardano wallet to continue.`;
+gateBlurbEl.textContent =
+  `If your wallet holds at least ${buildRequirementsLine()}, you have VIP LOC access. ` +
+  `Otherwise, you can unlock 30 days access for 5₳.`;
 
-  async function detect() {
-    try {
-      const wallets = await BrowserWallet.getInstalledWallets();
+async function detect() {
+  try {
+    const wallets = await BrowserWallet.getInstalledWallets();
 
-      if (!wallets.length) {
-        sel.innerHTML = '<option>(no wallets detected)</option>';
-        return;
-      }
-
-      // Prefer "mesh" if present
-      wallets.sort((a, b) =>
-        a.id === 'mesh' ? -1 : b.id === 'mesh' ? 1 : 0
-      );
-
-      sel.innerHTML = wallets
-        .map((w) => `<option value="${w.id}">${w.name}</option>`)
-        .join('');
-
-      sel.value = wallets[0].id;
-      btn.disabled = false;
-    } catch (err) {
-      console.error('Wallet detection failed:', err);
-      sel.innerHTML = '<option>(wallet detection failed)</option>';
+    if (!wallets.length) {
+      sel.innerHTML = '<option>(no wallets detected)</option>';
+      return;
     }
-  }
 
-  async function checkPaidAccessStatus() {
+    // Prefer "mesh" if present
+    wallets.sort((a, b) =>
+      a.id === 'mesh' ? -1 : b.id === 'mesh' ? 1 : 0
+    );
+
+    sel.innerHTML = wallets
+      .map((w) => `<option value="${w.id}">${w.name}</option>`)
+      .join('');
+
+    sel.value = wallets[0].id;
+    btn.disabled = false;
+  } catch (err) {
+    console.error('Wallet detection failed:', err);
+    sel.innerHTML = '<option>(wallet detection failed)</option>';
+  }
+}
+
+async function checkPaidAccessStatus() {
   if (!userIdentity) return null;
 
   try {
@@ -544,157 +920,832 @@ async function logPaidAccess(txHash) {
   }
 }
 
+function shortenAddress(addr) {
+  if (!addr || typeof addr !== 'string') return '–';
+  if (addr.length <= 16) return addr;
+  return addr.slice(0, 8) + '…' + addr.slice(-8);
+}
 
-  async function checkPolicyAssets() {
-    if (!meshWallet) return;
+function splitIntoLines(str, maxLen) {
+  const lines = [];
+  for (let i = 0; i < str.length; i += maxLen) {
+    lines.push(str.slice(i, i + maxLen));
+  }
+  return lines;
+}
 
-    walletStatus.classList.remove('hidden');
-    walletStatus.textContent = 'Checking Wallet…';
-    accessMessage.textContent = '';
-    accessMessage.classList.remove('error');
+function addHiddenLinkChip(key, label) {
+  const hiddenWrap = document.getElementById('locHiddenLinkTypes');
+  if (!hiddenWrap) return;
 
-    try {
-      const assets = await meshWallet.getAssets();
-      console.log('[LOC Gate] Assets:', assets);
+  // prevent duplicates
+  if (hiddenWrap.querySelector(`[data-key="${key}"]`)) return;
 
-      const required = Object.create(null);
-      for (const p of ACCESS_POLICIES) required[p.policyId] = 0;
+  const chip = document.createElement('button');
+  chip.type = 'button';
+  chip.className = 'loc-hidden-link-chip';
+  chip.dataset.key = key;
+  chip.textContent = `Add ${label}`;
+  chip.addEventListener('click', () => {
+    chip.remove();
+    const std = STANDARD_LINK_TYPES.find(t => t.key === key);
+    addLocLinkRow({
+      key,
+      label: std ? std.label : label,
+      url: '',
+      isStandard: true,
+    });
+    renderLocPreviews();
+  });
 
-      for (const asset of assets) {
-        if (asset && required[asset.policyId] !== undefined) {
-          required[asset.policyId]++;
-        }
+  hiddenWrap.appendChild(chip);
+}
+
+function buildLocMetadataFromForm() {
+  const titleEl = document.getElementById('locTitleInput');
+  const bioEl   = document.getElementById('locBioInput');
+  const linksWrap = document.getElementById('locLinksContainer');
+
+  const projectTitle = (titleEl?.value || '').trim() || 'My Linkz';
+  const bio   = (bioEl?.value || '').trim() || '';
+
+  // Derive assetName: remove spaces, then append _Linkz
+  const coreForAsset = projectTitle.replace(/\s+/g, '');
+  const assetName    = `${coreForAsset}_Linkz`;
+
+  // Display name has the " Linkz" suffix, but keeps spaces
+  const displayName  = `${projectTitle} Linkz`;
+
+  // --- Build links map { key: url } and a list for preview ---
+  const linksMap = {};
+  const previewLinks = [];
+
+  if (linksWrap) {
+    const rows = linksWrap.querySelectorAll('.loc-link-row');
+    rows.forEach(row => {
+      const labelInput = row.querySelector('input[data-role="label"]');
+      const urlInput   = row.querySelector('input[data-role="url"]');
+      const url = (urlInput?.value || '').trim();
+      if (!url) return;
+
+      let key = row.dataset.key || '';
+      let label = (labelInput?.value || '').trim() || key || 'link';
+
+      if (!key) {
+        // Derive a key from the label for custom fields
+        key = label.toLowerCase()
+          .replace(/[^a-z0-9]+/g, '_')
+          .replace(/^_+|_+$/g, '');
+        if (!key) return;
       }
 
-      const unmet = ACCESS_POLICIES.filter(
-        p => (required[p.policyId] || 0) < p.minAssets
-      );
+      linksMap[key] = url;
+      previewLinks.push({ label, url });
+    });
+  }
 
-      if (unmet.length === 0) {
-        const detail = buildRequirementsDetail(required);
+  // --- Image handling ---
+  let mode = 'url';
+  const modeEl = document.querySelector('input[name="locImageMode"]:checked');
+  if (modeEl && (modeEl.value === 'url' || modeEl.value === 'base64')) {
+    mode = modeEl.value;
+  }
 
-        walletStatus.textContent =
-          `✅ Access granted.\n${detail}`;
+  let image = null;
+  let mediaType = null;
+  let imageError = null;
 
-        accessMessage.classList.remove('error');
-        accessMessage.innerHTML = `<strong>Access granted. Loading LOC…</strong>`;
+  const urlInputEl    = document.getElementById('locImageUrlInput');
+  const mtSelectEl    = document.getElementById('locImageMediaTypeSelect');
+  const base64InputEl = document.getElementById('locImageBase64Input');
 
-        // Hide the 5₳ button because they don't need it
-        payAccessBtn.style.display = 'none';
+  if (mode === 'url') {
+    const urlVal = (urlInputEl?.value || '').trim();
+    const mtVal  = (mtSelectEl?.value || '').trim();
 
-        // SHOW PROTECTED AREA, HIDE GATE
-        protectedArea.classList.remove('hidden');
-        gateOverlay.classList.add('hidden');
+    if (!urlVal) {
+      imageError = 'Image is required. Please provide an image URL or switch to base64.';
+    } else if (!mtVal) {
+      imageError = 'Please select an image media type.';
+    } else {
+      image = urlVal;
+      mediaType = mtVal;
+    }
+  } else {
+    const raw = (base64InputEl?.value || '').trim();
+    if (!raw) {
+      imageError = 'Image is required. Please paste a full base64 data URL.';
+    } else {
+      const cleaned = raw.replace(/\s+/g, '');
+      const m = cleaned.match(/^data:([^;]+);base64,(.+)$/);
+      if (!m) {
+        imageError = 'Base64 data URL must look like: data:image/...;base64,XXXXX';
       } else {
-        const detail = buildRequirementsDetail(required);
-        walletStatus.textContent = detail;
-
-        // NEW: check if this wallet already has an active 30-day pass
-        let passInfo = null;
-        if (userIdentity) {
-          passInfo = await checkPaidAccessStatus();
-        }
-
-        if (passInfo && passInfo.status === 'active') {
-          // They paid in the last 30 days – let them in without paying again
-          walletStatus.textContent =
-            `LOC access active (5₳ pass).\nExpires: ${passInfo.expiresOn}`;
-
-          accessMessage.classList.remove('error');
-          accessMessage.innerHTML =
-            `<strong>Access granted via paid LOC pass. Loading LOC…</strong>`;
-
-          payAccessBtn.style.display = 'none';
-
-          protectedArea.classList.remove('hidden');
-          gateOverlay.classList.add('hidden');
-          return;
-        }
-
-        // No active pass -> show Purchase/Pay options as before
-        accessMessage.classList.add('error');
-        accessMessage.innerHTML =
-          `You don’t yet meet the LOC holder requirements.<br>` +
-          `<a href="${getPrimaryPurchaseUrl()}" target="_blank" rel="noopener noreferrer">
-             Purchase Assets
-           </a> or Pay 5₳ for 30 days access below.`;
-
-        // Make absolutely sure the button is visible
-        payAccessBtn.style.display = 'inline-flex';
+        mediaType = m[1];
+        const fullStr = cleaned;
+        image = splitIntoLines(fullStr, 64);
       }
-
-    } catch (err) {
-      console.error(err);
-      walletStatus.textContent = 'Error checking wallet assets.';
-      accessMessage.classList.add('error');
-      accessMessage.textContent = 'An error occurred while checking your wallet. Please try again.';
     }
   }
 
-  async function payForLocAccess() {
-    if (!meshWallet) {
-      alert('Connect a wallet first.');
-      return;
+
+  // Build the asset-level metadata (CIP-25-friendly)
+  const assetMetadata = {
+    name: displayName,       // e.g. "The Refresh Linkz"
+    Project: projectTitle,   // e.g. "The Refresh"
+    bio: bio,
+    links: linksMap,
+  };
+
+  if (image != null && mediaType) {
+    assetMetadata.image = image;
+    assetMetadata.mediaType = mediaType;
+  }
+
+  return {
+    assetMetadata,
+    assetName,             // "TheRefresh_Linkz"
+    title: projectTitle,   // for UI header
+    bio,
+    previewLinks,
+    imageError,
+  };
+}
+
+function buildLocCip25FromForm() {
+  // Base data from the form
+  const base = buildLocMetadataFromForm();
+  const { assetMetadata, assetName } = base;
+
+  let cip25 = null;
+
+  // Only build full CIP-25 if we have a policy ID
+  if (locPolicyId) {
+    cip25 = {
+      721: {
+        [locPolicyId]: {
+          [assetName]: assetMetadata,
+        },
+      },
+    };
+  }
+
+  return {
+    ...base,  // assetMetadata, assetName, title, bio, previewLinks, imageError
+    cip25,
+  };
+}
+
+
+function renderLocPreviews() {
+  if (!locPolicyId) return;
+
+  const previewEl = document.getElementById('locMetadataPreview');
+  const cardEl    = document.getElementById('locCardPreview');
+
+  // SINGLE SOURCE: same data used for preview, export, and mint
+  const {
+    cip25,
+    assetMetadata,
+    assetName,
+    title,
+    bio,
+    previewLinks,
+    imageError,
+  } = buildLocCip25FromForm();
+
+  // Update global snapshot used by mint
+  locLastPreviewCip25         = cip25;
+  locLastPreviewAssetMetadata = assetMetadata;
+  locLastPreviewAssetName     = assetName;
+  locLastPreviewImageError    = imageError;
+
+  // For debugging: you can see this in devtools console
+  console.log('[Linkz] Preview snapshot:', {
+    assetName,
+    metaName: assetMetadata?.name,
+    cip25,
+  });
+
+  if (previewEl && cip25) {
+    previewEl.textContent = JSON.stringify(cip25, null, 2);
+  }
+
+  if (cardEl) {
+    const titleEl = cardEl.querySelector('.loc-card-title');
+    const bioEl   = cardEl.querySelector('.loc-card-bio');
+    const listEl  = cardEl.querySelector('.loc-card-links');
+
+    if (titleEl) titleEl.textContent = title;
+    if (bioEl) bioEl.textContent = bio || 'Links saved on-chain with LOC.';
+
+    if (listEl) {
+      listEl.innerHTML = '';
+      const displayLinks = (previewLinks && previewLinks.length)
+        ? previewLinks
+        : [
+            { label: 'Example link 1', url: 'https://example.com' },
+            { label: 'Example link 2', url: 'https://example.com' },
+          ];
+      displayLinks.forEach(l => {
+        const li = document.createElement('li');
+        li.textContent = `${l.label} – ${l.url}`;
+        listEl.appendChild(li);
+      });
     }
+  }
+}
 
-    if (!GATE_RECIPIENT_ADDRESS) {
-      alert('LOC gate recipient address is not configured yet.\n\nPlease set GATE_RECIPIENT_ADDRESS in the code.');
-      return;
+
+
+function addLocLinkRow({ key = '', label = '', url = '', isStandard = false } = {}) {
+  const container = document.getElementById('locLinksContainer');
+  if (!container) return;
+
+  const row = document.createElement('div');
+  row.className = 'loc-link-row';
+  if (key) row.dataset.key = key;
+  if (isStandard) row.dataset.standard = '1';
+
+  row.innerHTML = `
+    <input type="text" data-role="label" placeholder="Label" value="${label || ''}" ${isStandard ? 'readonly' : ''}>
+    <input type="text" data-role="url" placeholder="URL (https://… or ipfs://…)" value="${url || ''}">
+    <button type="button" class="loc-link-remove">×</button>
+  `;
+
+  const labelInput = row.querySelector('input[data-role="label"]');
+  const urlInput   = row.querySelector('input[data-role="url"]');
+  const removeBtn  = row.querySelector('.loc-link-remove');
+
+  const handleChange = () => renderLocPreviews();
+  labelInput?.addEventListener('input', handleChange);
+  urlInput?.addEventListener('input', handleChange);
+
+  removeBtn?.addEventListener('click', () => {
+    const isStd = row.dataset.standard === '1';
+    const k = row.dataset.key;
+    const currentLabel = labelInput?.value || label || k || '';
+    row.remove();
+    if (isStd && k) {
+      addHiddenLinkChip(k, currentLabel);
     }
+    renderLocPreviews();
+  });
 
-    try {
-      payAccessBtn.disabled = true;
-      payAccessBtn.textContent = 'Preparing payment…';
-      accessMessage.classList.remove('error');
-      accessMessage.textContent = 'Building 5₳ LOC access transaction…';
+  container.appendChild(row);
+}
 
-      const tx = new Transaction({ initiator: meshWallet });
+// NEW: export current metadata as CIP-25 JSON
+function exportLocMetadata() {
+  if (!locPolicyId) {
+    alert('Policy not ready yet. Connect your wallet and wait for LOC to initialize.');
+    return;
+  }
 
-      // 5 ADA = 5,000,000 lovelace
-      tx.sendLovelace(GATE_RECIPIENT_ADDRESS, '5000000');
+  const { cip25 } = buildLocCip25FromForm();
+  if (!cip25) {
+    alert('Metadata not ready yet.');
+    return;
+  }
 
-      if (!userAddress) {
-        userAddress = await meshWallet.getChangeAddress();
+  const blob = new Blob([JSON.stringify(cip25, null, 2)], {
+    type: 'application/json',
+  });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'linkz-metadata.json';
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+
+// NEW: import metadata.json and repopulate form
+function importLocMetadataFromJson(obj) {
+  if (!obj || typeof obj !== 'object' || !obj['721']) {
+    alert('This JSON does not look like CIP-25 metadata (missing "721" root).');
+    return;
+  }
+
+  const policies = Object.keys(obj['721']);
+  if (!policies.length) {
+    alert('No policy entries found under "721".');
+    return;
+  }
+
+  // Take the first policy/asset entry as the source for form fields
+  const policyIdFromJson = policies[0];
+  const assetsObj = obj['721'][policyIdFromJson] || {};
+  const assetNames = Object.keys(assetsObj);
+  if (!assetNames.length) {
+    alert('No assets found under the first policy entry.');
+    return;
+  }
+
+  const assetName = assetNames[0];
+  const meta = assetsObj[assetName];
+  if (!meta || typeof meta !== 'object') {
+    alert('Asset metadata is missing or malformed.');
+    return;
+  }
+
+  const titleInput = document.getElementById('locTitleInput');
+  const bioInput   = document.getElementById('locBioInput');
+  const assetInput = document.getElementById('locAssetNameInput');
+
+  // Reconstruct project title from Project or from name minus " Linkz"
+  let projectTitle = meta.Project || '';
+  if (!projectTitle && typeof meta.name === 'string') {
+    projectTitle = meta.name.replace(/\s+Linkz\s*$/i, '').trim();
+  }
+  if (!projectTitle) projectTitle = 'My Linkz';
+
+  if (titleInput) titleInput.value = projectTitle;
+  if (bioInput) bioInput.value = meta.bio || '';
+  if (assetInput) assetInput.value = assetName;
+
+  // Image handling
+  const imageField = meta.image;
+  const mediaType = meta.mediaType || 'image/png';
+
+  const urlFields    = document.getElementById('locImageUrlFields');
+  const base64Fields = document.getElementById('locImageBase64Fields');
+  const urlInputEl   = document.getElementById('locImageUrlInput');
+  const mtSelectEl   = document.getElementById('locImageMediaTypeSelect');
+  const base64InputEl = document.getElementById('locImageBase64Input');
+
+  const modeUrlRadio    = document.querySelector('input[name="locImageMode"][value="url"]');
+  const modeBase64Radio = document.querySelector('input[name="locImageMode"][value="base64"]');
+
+  if (Array.isArray(imageField)) {
+    // Assume this is the 64-char-split base64 data URL
+    const fullStr = imageField.join('');
+    if (modeBase64Radio) modeBase64Radio.checked = true;
+    if (modeUrlRadio) modeUrlRadio.checked = false;
+    urlFields?.classList.add('hidden');
+    base64Fields?.classList.remove('hidden');
+    if (base64InputEl) base64InputEl.value = fullStr;
+  } else if (typeof imageField === 'string') {
+    if (modeUrlRadio) modeUrlRadio.checked = true;
+    if (modeBase64Radio) modeBase64Radio.checked = false;
+    urlFields?.classList.remove('hidden');
+    base64Fields?.classList.add('hidden');
+    if (urlInputEl) urlInputEl.value = imageField;
+    if (mtSelectEl) mtSelectEl.value = mediaType;
+  }
+
+  // Links
+  const linksContainer = document.getElementById('locLinksContainer');
+  const hiddenWrap     = document.getElementById('locHiddenLinkTypes');
+
+  if (linksContainer) linksContainer.innerHTML = '';
+  if (hiddenWrap) hiddenWrap.innerHTML = '';
+
+  const linksMap = meta.links || {};
+  const standardKeysUsed = new Set();
+
+  Object.entries(linksMap).forEach(([key, url]) => {
+    if (!url) return;
+    const std = STANDARD_LINK_TYPES.find(t => t.key === key);
+    if (std) {
+      addLocLinkRow({ key: std.key, label: std.label, url, isStandard: true });
+      standardKeysUsed.add(std.key);
+    } else {
+      const label = key.replace(/_/g, ' ');
+      addLocLinkRow({ key, label, url, isStandard: false });
+    }
+  });
+
+  // Add chips for any standard link types not present
+  STANDARD_LINK_TYPES.forEach(t => {
+    if (!standardKeysUsed.has(t.key)) {
+      addHiddenLinkChip(t.key, t.label);
+    }
+  });
+
+  // Re-render preview with the imported data but keep current locPolicyId for new mints
+  renderLocPreviews();
+}
+
+async function initLocApp(accessVia) {
+  if (locInitialized) return;
+  locInitialized = true;
+  locAccessMode = accessVia || 'holder';
+
+  const locStatus = document.getElementById('locStatusMessage');
+  if (locStatus) {
+    locStatus.textContent =
+      accessVia === 'pass'
+        ? 'Access granted via paid LOC pass. Welcome to LOC.'
+        : 'Access granted via OG The Refresh. Welcome to LOC.';
+  }
+
+  // Derive forging script & policy ID (wallet-bound open policy)
+  if (!meshWallet) return;
+
+  if (!userAddress) {
+    userAddress = await meshWallet.getChangeAddress();
+  }
+
+  const forgingScript = ForgeScript.withOneSignature(userAddress);
+  const policyId = resolveScriptHash(forgingScript);
+
+  locForgingScript = forgingScript;
+  locPolicyId = policyId;
+
+  // Try to extract/stash keyHash from the native script structure (not shown on screen)
+  try {
+    const script = forgingScript && forgingScript.script
+      ? forgingScript.script
+      : forgingScript && forgingScript.nativeScript
+      ? forgingScript.nativeScript
+      : null;
+
+    if (script) {
+      if (script.keyHash) {
+        locKeyHash = script.keyHash;
+      } else if (Array.isArray(script.scripts)) {
+        const sigPart = script.scripts.find(s => s && s.type === 'sig' && s.keyHash);
+        if (sigPart) {
+          locKeyHash = sigPart.keyHash;
+        }
       }
-      tx.setChangeAddress(userAddress);
+    }
+  } catch (e) {
+    console.warn('[LOC] Could not derive keyHash from forging script:', e);
+  }
 
-      const unsignedTx = await tx.build();
-      const signedTx   = await meshWallet.signTx(unsignedTx);
-      const txHash     = await meshWallet.submitTx(signedTx);
+  // Fill profile panel
+  const walletShortEl = document.getElementById('locWalletShort');
+  const accessTypeEl  = document.getElementById('locAccessType');
+  const policyEl      = document.getElementById('locPolicyId');
 
-      console.log('[LOC] Access payment tx hash:', txHash);
+  if (walletShortEl) walletShortEl.textContent = shortenAddress(userAddress);
+  if (accessTypeEl) {
+    accessTypeEl.textContent =
+      accessVia === 'pass' ? 'Paid LOC pass (5₳)' : 'OG The Refresh holder';
+  }
+  if (policyEl) policyEl.textContent = policyId;
 
-      // NEW: log this payment as a 30-day pass
-      await logPaidAccess(txHash);
+  // Wire buttons
+  const addLinkBtn  = document.getElementById('locAddLinkBtn');
+  const saveBtn     = document.getElementById('locSaveOnChainBtn');
+  const dlPolicy    = document.getElementById('locDownloadPolicyBtn');
+  const exportBtn   = document.getElementById('locExportJsonBtn');
+  const importBtn   = document.getElementById('locImportJsonBtn');
+  const importInput = document.getElementById('locImportFile');
 
-      walletStatus.textContent = `LOC access paid. Tx: ${txHash}`;
+  addLinkBtn?.addEventListener('click', () => {
+    addLocLinkRow({ key: '', label: '', url: '', isStandard: false });
+  });
+
+  saveBtn?.addEventListener('click', async () => {
+    await saveLocOnChain();
+  });
+
+  dlPolicy?.addEventListener('click', () => {
+    if (!locPolicyId || !locForgingScript) return;
+    // Use stored keyHash if available; do NOT show it on screen
+    const scriptJson = locForgingScript.script || locForgingScript.nativeScript || {
+      type: 'sig',
+      keyHash: locKeyHash || '<keyHash>',
+    };
+    const blob = new Blob(
+      [JSON.stringify({ policyId: locPolicyId, nativeScript: scriptJson }, null, 2)],
+      { type: 'application/json' },
+    );
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'linkz-policy.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
+
+  // NEW: export/import wiring
+  exportBtn?.addEventListener('click', () => {
+    exportLocMetadata();
+  });
+
+  importBtn?.addEventListener('click', () => {
+    if (!importInput) return;
+    importInput.value = '';
+    importInput.click();
+  });
+
+  importInput?.addEventListener('change', (e) => {
+    const file = e.target.files && e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      try {
+        const obj = JSON.parse(String(reader.result));
+        importLocMetadataFromJson(obj);
+      } catch (err) {
+        console.error('[LOC] Failed to parse imported JSON:', err);
+        alert('Failed to parse JSON file. Please check that it is valid JSON.');
+      }
+    };
+    reader.readAsText(file);
+  });
+  // END NEW export/import wiring
+
+  // Image mode toggles
+  const urlFields    = document.getElementById('locImageUrlFields');
+  const base64Fields = document.getElementById('locImageBase64Fields');
+  const imageModeRadios = document.querySelectorAll('input[name="locImageMode"]');
+
+  // These will be defined just below; closures are fine
+  const titleInput = document.getElementById('locTitleInput');
+  const assetInput = document.getElementById('locAssetNameInput');
+
+  if (assetInput) {
+    assetInput.readOnly = true;
+  }
+
+  imageModeRadios.forEach(r => {
+    r.addEventListener('change', () => {
+      const mode = r.value;
+      if (mode === 'url') {
+        urlFields?.classList.remove('hidden');
+        base64Fields?.classList.add('hidden');
+      } else {
+        urlFields?.classList.add('hidden');
+        base64Fields?.classList.remove('hidden');
+      }
+      if (titleInput && assetInput) {
+        const projectTitle = (titleInput.value || '').trim() || 'My Linkz';
+        const coreForAsset = projectTitle.replace(/\s+/g, '');
+        assetInput.value = `${coreForAsset}_Linkz`;
+      }
+      renderLocPreviews();
+    });
+  });
+
+  // Basic inputs update preview
+  titleInput?.addEventListener('input', () => {
+    const projectTitle = (titleInput.value || '').trim() || 'My Linkz';
+    const coreForAsset = projectTitle.replace(/\s+/g, '');
+    if (assetInput) {
+      assetInput.value = `${coreForAsset}_Linkz`;
+    }
+    renderLocPreviews();
+  });
+
+  document.getElementById('locBioInput')?.addEventListener('input', renderLocPreviews);
+  document.getElementById('locImageUrlInput')?.addEventListener('input', renderLocPreviews);
+  document.getElementById('locImageMediaTypeSelect')?.addEventListener('change', renderLocPreviews);
+  document.getElementById('locImageBase64Input')?.addEventListener('input', renderLocPreviews);
+
+  // Start with the 6 standard link types visible
+  const hiddenWrap = document.getElementById('locHiddenLinkTypes');
+  if (hiddenWrap) hiddenWrap.innerHTML = '';
+  STANDARD_LINK_TYPES.forEach(t => {
+    addLocLinkRow({ key: t.key, label: t.label, url: '', isStandard: true });
+  });
+
+  renderLocPreviews();
+}
+
+async function saveLocOnChain() {
+  const statusEl = document.getElementById('locTxStatus');
+  if (!meshWallet || !locForgingScript || !locPolicyId || !userAddress) {
+    if (statusEl) {
+      statusEl.textContent = 'Wallet not ready. Please reconnect and try again.';
+    }
+    return;
+  }
+
+  // Ensure we have a snapshot; if not, force one render
+  if (!locLastPreviewCip25 || !locLastPreviewAssetMetadata || !locLastPreviewAssetName) {
+    renderLocPreviews();
+  }
+
+  const assetName   = locLastPreviewAssetName;
+  const assetMetadata = locLastPreviewAssetMetadata;
+  const imageError  = locLastPreviewImageError;
+
+  if (imageError) {
+    if (statusEl) statusEl.textContent = imageError;
+    return;
+  }
+
+  if (!assetName) {
+    if (statusEl) statusEl.textContent = 'Please provide an asset name.';
+    return;
+  }
+
+  // Debug: log exactly what we are about to mint
+  console.log('[Linkz] Minting with:', {
+    assetName,
+    metaName: assetMetadata?.name,
+    policyId: locPolicyId,
+    metadata: assetMetadata,
+  });
+
+  try {
+    if (statusEl) {
+      statusEl.textContent = 'Building Linkz transaction…';
+    }
+
+    const tx = new Transaction({ initiator: meshWallet });
+
+    // Check if a Linkz token under this policy already exists in the wallet
+    const assets = await meshWallet.getAssets();
+    const existing = assets.filter(
+      (a) => a.policyId === locPolicyId && a.assetName === assetName
+    );
+
+    if (existing.length > 0) {
+      const burnAsset = {
+        policyId: locPolicyId,
+        assetName,
+        assetQuantity: existing[0].quantity || '1',
+      };
+      tx.burnAsset(locForgingScript, burnAsset);
+    }
+
+    // Mesh expects asset-level metadata here; it will wrap it under 721/policyId/assetName
+    const mintAsset = {
+      assetName,
+      assetQuantity: '1',
+      metadata: assetMetadata,  // EXACT same object the preview snapshot shows
+      label: '721',
+      recipient: userAddress,
+    };
+
+    tx.mintAsset(locForgingScript, mintAsset);
+    tx.setChangeAddress(userAddress);
+
+    const unsignedTx = await tx.build();
+    const signedTx   = await meshWallet.signTx(unsignedTx);
+    const txHash     = await meshWallet.submitTx(signedTx);
+
+    console.log('[Linkz] Saved Linkz token tx hash:', txHash);
+
+    if (statusEl) {
+      statusEl.textContent = `Linkz saved on-chain. Tx: ${txHash}`;
+    }
+  } catch (err) {
+    console.error('[Linkz] saveLocOnChain error:', err);
+    if (statusEl) {
+      statusEl.textContent =
+        'Saving Linkz on-chain failed or was rejected. No assets were changed.';
+    }
+  }
+}
+
+
+
+async function checkPolicyAssets() {
+  if (!meshWallet) return;
+
+  walletStatus.classList.remove('hidden');
+  walletStatus.textContent = 'Checking Wallet…';
+  accessMessage.textContent = '';
+  accessMessage.classList.remove('error');
+
+  try {
+    const assets = await meshWallet.getAssets();
+    console.log('[LOC Gate] Assets:', assets);
+
+    const required = Object.create(null);
+    for (const p of ACCESS_POLICIES) required[p.policyId] = 0;
+
+    for (const asset of assets) {
+      if (asset && required[asset.policyId] !== undefined) {
+        required[asset.policyId]++;
+      }
+    }
+
+    const unmet = ACCESS_POLICIES.filter(
+      p => (required[p.policyId] || 0) < p.minAssets
+    );
+
+    if (unmet.length === 0) {
+      const detail = buildRequirementsDetail(required);
+
+      walletStatus.textContent =
+        `✅ Access granted.\n${detail}`;
+
       accessMessage.classList.remove('error');
-      accessMessage.innerHTML = `<strong>Access granted. Welcome to LOC.</strong>`;
+      accessMessage.innerHTML = `<strong>Access granted. Loading LOC…</strong>`;
 
+      // Hide the 5₳ button because they don't need it
+      payAccessBtn.style.display = 'none';
+
+      // SHOW PROTECTED AREA, HIDE GATE
       protectedArea.classList.remove('hidden');
       gateOverlay.classList.add('hidden');
-    } catch (err) {
-      console.error('[LOC] payForLocAccess error:', err);
+      initLocApp('holder');
+    } else {
+      const detail = buildRequirementsDetail(required);
+      walletStatus.textContent = detail;
+
+      // NEW: check if this wallet already has an active 30-day pass
+      let passInfo = null;
+      if (userIdentity) {
+        passInfo = await checkPaidAccessStatus();
+      }
+
+      if (passInfo && passInfo.status === 'active') {
+        walletStatus.textContent =
+          `LOC access active (5₳ pass).\nExpires: ${passInfo.expiresOn}`;
+
+        accessMessage.classList.remove('error');
+        accessMessage.innerHTML =
+          `<strong>Access granted via paid LOC pass. Loading LOC…</strong>`;
+
+        payAccessBtn.style.display = 'none';
+
+        protectedArea.classList.remove('hidden');
+        gateOverlay.classList.add('hidden');
+        initLocApp('holder');
+        return;
+      }
+
       accessMessage.classList.add('error');
-      accessMessage.textContent =
-        'Payment failed or was rejected. No funds were taken. You can try again.';
-    } finally {
-      payAccessBtn.disabled = false;
-      payAccessBtn.textContent = 'Pay 5₳ for 30 days access';
+      accessMessage.innerHTML =
+        `You don’t yet meet the LOC holder requirements.<br>` +
+        `<a href="${getPrimaryPurchaseUrl()}" target="_blank" rel="noopener noreferrer">
+           Purchase Assets
+         </a> or Pay 5₳ for 30 days access below.`;
+
+      payAccessBtn.style.display = 'inline-flex';
     }
+
+  } catch (err) {
+    console.error(err);
+    walletStatus.textContent = 'Error checking wallet assets.';
+    accessMessage.classList.add('error');
+    accessMessage.textContent = 'An error occurred while checking your wallet. Please try again.';
+  }
+}
+
+async function payForLocAccess() {
+  if (!meshWallet) {
+    alert('Connect a wallet first.');
+    return;
   }
 
-  async function connect() {
-    const walletId = sel.value;
-    if (!walletId) {
-      alert('Select a wallet');
-      return;
+  if (!GATE_RECIPIENT_ADDRESS) {
+    alert('LOC gate recipient address is not configured yet.\n\nPlease set GATE_RECIPIENT_ADDRESS in the code.');
+    return;
+  }
+
+  try {
+    payAccessBtn.disabled = true;
+    payAccessBtn.textContent = 'Preparing payment…';
+    accessMessage.classList.remove('error');
+    accessMessage.textContent = 'Building 5₳ LOC access transaction…';
+
+    const tx = new Transaction({ initiator: meshWallet });
+
+    // 5 ADA = 5,000,000 lovelace
+    tx.sendLovelace(GATE_RECIPIENT_ADDRESS, '5000000');
+
+    if (!userAddress) {
+      userAddress = await meshWallet.getChangeAddress();
     }
+    tx.setChangeAddress(userAddress);
 
-    btn.disabled = true;
-    btn.textContent = 'Connecting…';
+    const unsignedTx = await tx.build();
+    const signedTx   = await meshWallet.signTx(unsignedTx);
+    const txHash     = await meshWallet.submitTx(signedTx);
 
-    try {
+    console.log('[LOC] Access payment tx hash:', txHash);
+
+    await logPaidAccess(txHash);
+
+    walletStatus.textContent = `LOC access paid. Tx: ${txHash}`;
+    accessMessage.classList.remove('error');
+    accessMessage.innerHTML = `<strong>Access granted. Welcome to LOC.</strong>`;
+
+    protectedArea.classList.remove('hidden');
+    gateOverlay.classList.add('hidden');
+    initLocApp('holder');
+  } catch (err) {
+    console.error('[LOC] payForLocAccess error:', err);
+    accessMessage.classList.add('error');
+    accessMessage.textContent =
+      'Payment failed or was rejected. No funds were taken. You can try again.';
+  } finally {
+    payAccessBtn.disabled = false;
+    payAccessBtn.textContent = 'Pay 5₳ for 30 days access';
+  }
+}
+
+async function connect() {
+  const walletId = sel.value;
+  if (!walletId) {
+    alert('Select a wallet');
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'Connecting…';
+
+  try {
     meshWallet = await BrowserWallet.enable(walletId);
     userAddress = await meshWallet.getChangeAddress();
 
@@ -714,30 +1765,29 @@ async function logPaidAccess(txHash) {
     btn.textContent = `Connected: ${walletId}`;
     sel.disabled = true;
 
-    // Run the policy check right after connection
     await checkPolicyAssets();
 
-    } catch (e) {
-      console.error('Wallet connection failed:', e);
+  } catch (e) {
+    console.error('Wallet connection failed:', e);
 
-      let humanMsg =
-        'Connection failed.\n\n' +
-        '• If your wallet uses a PIN/password, open the wallet extension/app and unlock it first.\n' +
-        '• Then come back here and press "Connect Wallet" again.';
+    let humanMsg =
+      'Connection failed.\n\n' +
+      '• If your wallet uses a PIN/password, open the wallet extension/app and unlock it first.\n' +
+      '• Then come back here and press "Connect Wallet" again.';
 
-      if (e && e.message) {
-        humanMsg = `Connection failed: ${e.message}\n\n` + humanMsg;
-      }
-
-      alert(humanMsg);
-      btn.textContent = 'Connect Wallet';
-      btn.disabled = false;
+    if (e && e.message) {
+      humanMsg = `Connection failed: ${e.message}\n\n` + humanMsg;
     }
-  }
 
-  document.addEventListener('DOMContentLoaded', detect);
-  btn.addEventListener('click', connect);
-  payAccessBtn.addEventListener('click', payForLocAccess);
+    alert(humanMsg);
+    btn.textContent = 'Connect Wallet';
+    btn.disabled = false;
+  }
+}
+
+document.addEventListener('DOMContentLoaded', detect);
+btn.addEventListener('click', connect);
+payAccessBtn.addEventListener('click', payForLocAccess);
 </script>
 
 </body>
