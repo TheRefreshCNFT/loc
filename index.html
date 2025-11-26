@@ -235,18 +235,17 @@
     }
 
     #payAccessBtn {
-  margin-top: 0.75rem;
-  background: linear-gradient(135deg, #21cbf3, #7cffb3);
-  color: #050814;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  border-radius: 999px;
-}
+      margin-top: 0.75rem;
+      background: linear-gradient(135deg, #21cbf3, #7cffb3);
+      color: #050814;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+      border-radius: 999px;
+    }
 
     #payAccessBtn:hover {
       transform: translateY(-1px) scale(1.01);
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.7);
     }
-
 
     #walletStatus {
       background: rgba(9, 16, 40, 0.9);
@@ -260,72 +259,70 @@
     .access-message a { color: #ffc857; }
 
     /* LOC gated area layout */
-.loc-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 1.5rem 1.75rem;
-}
+    .loc-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 1.5rem 1.75rem;
+    }
 
-.loc-header {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-}
+    .loc-header {
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
 
-.loc-title {
-  font-size: 1.4rem;
-  font-weight: 600;
-  margin: 0;
-}
+    .loc-title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin: 0;
+    }
 
-.loc-title-accent {
-  opacity: 0.8;
-  font-size: 0.95em;
-}
+    .loc-title-accent {
+      opacity: 0.8;
+      font-size: 0.95em;
+    }
 
-.loc-subtitle {
-  margin: 0;
-  font-size: 0.9rem;
-  opacity: 0.85;
-}
+    .loc-subtitle {
+      margin: 0;
+      font-size: 0.9rem;
+      opacity: 0.85;
+    }
 
-.loc-status-block {
-  padding: 0.75rem 1rem;
-  border-radius: 0.75rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(0, 0, 0, 0.12);
-  backdrop-filter: blur(6px);
-}
+    .loc-status-block {
+      padding: 0.75rem 1rem;
+      border-radius: 0.75rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(0, 0, 0, 0.12);
+      backdrop-filter: blur(6px);
+    }
 
-.loc-status {
-  margin: 0;
-  font-size: 0.95rem;
-}
+    .loc-status {
+      margin: 0;
+      font-size: 0.95rem;
+    }
 
-/* future variants when we add other states */
-.loc-status-ok {
-  font-weight: 500;
-}
+    .loc-status-ok {
+      font-weight: 500;
+    }
 
-.loc-app-shell {
-  border-radius: 0.75rem;
-  border: 1px dashed rgba(255, 255, 255, 0.12);
-  padding: 1.25rem 1rem;
-  min-height: 180px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .loc-app-shell {
+      border-radius: 0.75rem;
+      border: 1px dashed rgba(255, 255, 255, 0.12);
+      padding: 1.25rem 1rem;
+      min-height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
-.loc-placeholder {
-  font-size: 0.9rem;
-  opacity: 0.8;
-  text-align: center;
-}
-
+    .loc-placeholder {
+      font-size: 0.9rem;
+      opacity: 0.8;
+      text-align: center;
+    }
 
     @media (max-width: 600px) {
       header .container { padding-top: 1.5rem; }
@@ -348,6 +345,9 @@
       <h2 class="loc-title">
         Links On-Chain <span class="loc-title-accent">(LOC)</span>
       </h2>
+      <p class="loc-subtitle">
+        Access granted via LOC gate. Welcome in. ✨
+      </p>
     </header>
 
     <section class="loc-status-block">
@@ -364,169 +364,157 @@
   </div>
 </div>
 
+<!-- WALLET GATE OVERLAY -->
+<div id="gateOverlay">
+  <img src="RF5.png" alt="Fre5h Logo" class="brand-logo">
 
-  <!-- WALLET GATE OVERLAY -->
-  <div id="gateOverlay">
-    <img src="RF5.png" alt="Fre5h Logo" class="brand-logo">
+  <header>
+    <div class="container">
+      <h1>Links On-Chain Access</h1>
 
-    <header>
-      <div class="container">
-        <h1>Links On-Chain Access</h1>
+      <p id="description">Exclusive entry discounts for peeps who get Fre5h! 🔄</p>
+      <p id="instructions"></p>
 
-        <p id="description">Exclusive entry discounts for peeps who get Fre5h! 🔄</p>
-        <p id="instructions"></p>
-
-        <div class="row" id="connectRow">
-          <select id="walletSelect">
-            <option value="">Select Wallet…</option>
-          </select>
-          <button id="connectBtn" disabled>Connect Wallet</button>
-        </div>
-
-        <div id="walletStatus" class="hidden"></div>
+      <div class="row" id="connectRow">
+        <select id="walletSelect">
+          <option value="">Select Wallet…</option>
+        </select>
+        <button id="connectBtn" disabled>Connect Wallet</button>
       </div>
-    </header>
 
-<div class="container">
-  <div class="card">
-    <h2>Access Gate</h2>
-    <!-- Short, static pricing text lives on the gate -->
-    <p class="access-message">
-      The Refresh hodlers have no access charge. 5₳ for 30 days access for all others.
-    </p>
+      <div id="walletStatus" class="hidden"></div>
+    </div>
+  </header>
 
-    <p id="gateBlurb"></p>
-    <p id="accessMessage" class="access-message"></p>
+  <div class="container">
+    <div class="card">
+      <h2>Access Gate</h2>
+      <!-- Short, static pricing text lives on the gate -->
+      <p class="access-message">
+        The Refresh hodlers have no access charge. 5₳ for 30 days access for all others.
+      </p>
 
-    <!-- Shown only if policy requirements are NOT met -->
-    <button id="payAccessBtn" class="hidden">
-      Pay 5₳ for 30 days access
-    </button>
+      <p id="gateBlurb"></p>
+      <p id="accessMessage" class="access-message"></p>
+
+      <!-- Shown only if policy requirements are NOT met -->
+      <button id="payAccessBtn" style="display:none;">
+        Pay 5₳ for 30 days access
+      </button>
+    </div>
   </div>
 </div>
 
-  </div>
+<script type="module">
+  import { BrowserWallet, Transaction } from 'https://esm.sh/@meshsdk/core@1.9.0-beta.62?bundle';
 
-  <!-- Wallet connector gate (your working code, only policy check upgraded to use an array + per-policy counts) -->
-  <script type="module">
-    import { BrowserWallet, Transaction } from 'https://esm.sh/@meshsdk/core@1.9.0-beta.62?bundle';
+  const sel           = document.getElementById('walletSelect');
+  const btn           = document.getElementById('connectBtn');
+  const walletStatus  = document.getElementById('walletStatus');
+  const accessMessage = document.getElementById('accessMessage');
+  const gateOverlay   = document.getElementById('gateOverlay');
+  const protectedArea = document.getElementById('protectedArea');
 
+  const instructionsEl = document.getElementById('instructions');
+  const gateBlurbEl    = document.getElementById('gateBlurb');
+  const connectRow     = document.getElementById('connectRow');
+  const payAccessBtn   = document.getElementById('payAccessBtn');
 
-    const sel           = document.getElementById('walletSelect');
-    const btn           = document.getElementById('connectBtn');
-    const walletStatus  = document.getElementById('walletStatus');
-    const accessMessage = document.getElementById('accessMessage');
-    const gateOverlay   = document.getElementById('gateOverlay');
-    const protectedArea = document.getElementById('protectedArea');
+  // TODO: replace with your real receive address (no extra text)
+  const GATE_RECIPIENT_ADDRESS =
+    'addr1q9m2reerla2ccrkwz57rhwl7q8vj8y38x39nv4mq56ppjqmzs7jlke6nm3thlvvddtsnp52s62u0337y9h6d2gmma2wsmjx8nh';
 
-    const instructionsEl = document.getElementById('instructions');
-    const gateBlurbEl    = document.getElementById('gateBlurb');
-    const connectRow     = document.getElementById('connectRow');
-    const payAccessBtn   = document.getElementById('payAccessBtn');
-
-//platform receiving
-    const GATE_RECIPIENT_ADDRESS = 'addr1q9m2reerla2ccrkwz57rhwl7q8vj8y38x39nv4mq56ppjqmzs7jlke6nm3thlvvddtsnp52s62u0337y9h6d2gmma2wsmjx8nh';
-
-    // =========================================================
-    // Fre5h Fence access requirements (EDIT THESE AT THE TOP)
-    // - Add more objects for more policy IDs
-    // - Set minAssets per policy individually
-    // =========================================================
-    const ACCESS_POLICIES = [
-      {
-        policyId: 'adc5716393953403109c335e68c0384238fd19653e960e03afa1fb1f',
-        minAssets: 5,
-        label: 'OG The Refresh',
-        purchaseUrl: 'https://www.jpg.store/collection/therefresh'
-      }
-    ];
-    // =========================================================
-
-    let meshWallet, userAddress;
-
-    function buildRequirementsLine() {
-      return ACCESS_POLICIES
-        .map(p => `${p.minAssets} ${p.label}`)
-        .join(' + ');
+  // =========================================================
+  // Fre5h Fence / LOC holder access requirements
+  // =========================================================
+  const ACCESS_POLICIES = [
+    {
+      policyId: 'adc5716393953403109c335e68c0384238fd19653e960e03afa1fb1f',
+      minAssets: 5,
+      label: 'OG The Refresh',
+      purchaseUrl: 'https://www.jpg.store/collection/therefresh'
     }
+  ];
+  // =========================================================
 
-    function buildRequirementsDetail(foundMap) {
-      return ACCESS_POLICIES
-        .map(p => {
-          const found = foundMap[p.policyId] ?? 0;
-          return `${p.label}: ${found} / ${p.minAssets}`;
-        })
-        .join('\n');
-    }
+  let meshWallet, userAddress;
 
-    function getPrimaryPurchaseUrl() {
-      // If multiple later, you can pick a different one; for now keep first.
-      return (ACCESS_POLICIES[0] && ACCESS_POLICIES[0].purchaseUrl) || 'https://www.jpg.store/';
-    }
+  function buildRequirementsLine() {
+    return ACCESS_POLICIES
+      .map(p => `${p.minAssets} ${p.label}`)
+      .join(' + ');
+  }
 
-    // Set gate text from the variables above (so you only edit in one place)
+  function buildRequirementsDetail(foundMap) {
+    return ACCESS_POLICIES
+      .map(p => {
+        const found = foundMap[p.policyId] ?? 0;
+        return `${p.label}: ${found} / ${p.minAssets}`;
+      })
+      .join('\n');
+  }
+
+  function getPrimaryPurchaseUrl() {
+    return (ACCESS_POLICIES[0] && ACCESS_POLICIES[0].purchaseUrl) || 'https://www.jpg.store/';
+  }
+
+  // Set gate text
   instructionsEl.textContent = `Connect a Cardano wallet to continue.`;
   gateBlurbEl.textContent =
     `If your wallet holds at least ${buildRequirementsLine()}, you have VIP LOC access. ` +
     `Otherwise, you can unlock 30 days access for 5₳.`;
 
+  async function detect() {
+    try {
+      const wallets = await BrowserWallet.getInstalledWallets();
 
-    async function detect() {
-      try {
-        const wallets = await BrowserWallet.getInstalledWallets();
-
-        if (!wallets.length) {
-          sel.innerHTML = '<option>(no wallets detected)</option>';
-          return;
-        }
-
-        // Prefer "mesh" if present – but now use .id
-        wallets.sort((a, b) =>
-          a.id === 'mesh' ? -1 : b.id === 'mesh' ? 1 : 0
-        );
-
-        // IMPORTANT: value = wallet.id, label = wallet.name
-        sel.innerHTML = wallets
-          .map((w) => `<option value="${w.id}">${w.name}</option>`)
-          .join('');
-
-        // Default to the first wallet's id
-        sel.value = wallets[0].id;
-        btn.disabled = false;
-      } catch (err) {
-        console.error('Wallet detection failed:', err);
-        sel.innerHTML = '<option>(wallet detection failed)</option>';
+      if (!wallets.length) {
+        sel.innerHTML = '<option>(no wallets detected)</option>';
+        return;
       }
+
+      // Prefer "mesh" if present
+      wallets.sort((a, b) =>
+        a.id === 'mesh' ? -1 : b.id === 'mesh' ? 1 : 0
+      );
+
+      sel.innerHTML = wallets
+        .map((w) => `<option value="${w.id}">${w.name}</option>`)
+        .join('');
+
+      sel.value = wallets[0].id;
+      btn.disabled = false;
+    } catch (err) {
+      console.error('Wallet detection failed:', err);
+      sel.innerHTML = '<option>(wallet detection failed)</option>';
     }
+  }
 
-    async function checkPolicyAssets() {
-      if (!meshWallet) return;
+  async function checkPolicyAssets() {
+    if (!meshWallet) return;
 
-      // Show "Checking Wallet" while the scan is running
-      walletStatus.classList.remove('hidden');
-      walletStatus.textContent = 'Checking Wallet…';
-      accessMessage.textContent = '';
-      accessMessage.classList.remove('error');
+    walletStatus.classList.remove('hidden');
+    walletStatus.textContent = 'Checking Wallet…';
+    accessMessage.textContent = '';
+    accessMessage.classList.remove('error');
 
-      try {
-        // Mesh aggregates across all addresses in the wallet
-        const assets = await meshWallet.getAssets();
-        console.log('[Fre5h Fence] Assets:', assets);
+    try {
+      const assets = await meshWallet.getAssets();
+      console.log('[LOC Gate] Assets:', assets);
 
-        // Build lookup for required policy IDs
-        const required = Object.create(null);
-        for (const p of ACCESS_POLICIES) required[p.policyId] = 0;
+      const required = Object.create(null);
+      for (const p of ACCESS_POLICIES) required[p.policyId] = 0;
 
-        // Count assets per required policy ID
-        for (const asset of assets) {
-          if (asset && required[asset.policyId] !== undefined) {
-            required[asset.policyId]++;
-          }
+      for (const asset of assets) {
+        if (asset && required[asset.policyId] !== undefined) {
+          required[asset.policyId]++;
         }
+      }
 
-        // Validate per-policy minimums
-        const unmet = ACCESS_POLICIES.filter(p => (required[p.policyId] || 0) < p.minAssets);
-        
+      const unmet = ACCESS_POLICIES.filter(
+        p => (required[p.policyId] || 0) < p.minAssets
+      );
+
       if (unmet.length === 0) {
         const detail = buildRequirementsDetail(required);
 
@@ -537,14 +525,13 @@
         accessMessage.innerHTML = `<strong>Access granted. Loading LOC…</strong>`;
 
         // Hide the 5₳ button because they don't need it
-        payAccessBtn.classList.add('hidden');
+        payAccessBtn.style.display = 'none';
 
         // SHOW PROTECTED AREA, HIDE GATE
         protectedArea.classList.remove('hidden');
         gateOverlay.classList.add('hidden');
       } else {
         const detail = buildRequirementsDetail(required);
-
         walletStatus.textContent = detail;
 
         accessMessage.classList.add('error');
@@ -555,115 +542,106 @@
            </a> or Pay 5₳ for 30 days access below.`;
 
         // Make absolutely sure the button is visible
-        payAccessBtn.classList.remove('hidden');
         payAccessBtn.style.display = 'inline-flex';
       }
+    } catch (err) {
+      console.error(err);
+      walletStatus.textContent = 'Error checking wallet assets.';
+      accessMessage.classList.add('error');
+      accessMessage.textContent = 'An error occurred while checking your wallet. Please try again.';
+    }
+  }
 
-
-      } catch (err) {
-        console.error(err);
-        walletStatus.textContent = 'Error checking wallet assets.';
-        accessMessage.classList.add('error');
-        accessMessage.textContent = 'An error occurred while checking your wallet. Please try again.';
-      }
+  async function payForLocAccess() {
+    if (!meshWallet) {
+      alert('Connect a wallet first.');
+      return;
     }
 
-    async function payForLocAccess() {
-  if (!meshWallet) {
-    alert('Connect a wallet first.');
-    return;
-  }
-
-  if (!GATE_RECIPIENT_ADDRESS || GATE_RECIPIENT_ADDRESS.includes('addr1q9m2reerla2ccrkwz57rhwl7q8vj8y38x39nv4mq56ppjqmzs7jlke6nm3thlvvddtsnp52s62u0337y9h6d2gmma2wsmjx8nh')) {
-    alert('LOC gate recipient address is not configured yet.\n\nPlease set GATE_RECIPIENT_ADDRESS in the code.');
-    return;
-  }
-
-  try {
-    payAccessBtn.disabled = true;
-    payAccessBtn.textContent = 'Preparing payment…';
-    accessMessage.classList.remove('error');
-    accessMessage.textContent = 'Building 5₳ LOC access transaction…';
-
-    // Build a simple 5₳ payment tx to your gate address
-    const tx = new Transaction({ initiator: meshWallet });
-
-    // 5 ADA = 5,000,000 lovelace
-    tx.sendLovelace(GATE_RECIPIENT_ADDRESS, '5000000');
-
-    // Make sure change returns to the connected wallet
-    if (!userAddress) {
-      userAddress = await meshWallet.getChangeAddress();
+    if (!GATE_RECIPIENT_ADDRESS) {
+      alert('LOC gate recipient address is not configured yet.\n\nPlease set GATE_RECIPIENT_ADDRESS in the code.');
+      return;
     }
-    tx.setChangeAddress(userAddress);
 
-    const unsignedTx = await tx.build();
-    const signedTx   = await meshWallet.signTx(unsignedTx);
-    const txHash     = await meshWallet.submitTx(signedTx);
+    try {
+      payAccessBtn.disabled = true;
+      payAccessBtn.textContent = 'Preparing payment…';
+      accessMessage.classList.remove('error');
+      accessMessage.textContent = 'Building 5₳ LOC access transaction…';
 
-    console.log('[LOC] Access payment tx hash:', txHash);
+      const tx = new Transaction({ initiator: meshWallet });
 
-    walletStatus.textContent = `LOC access paid. Tx: ${txHash}`;
-    accessMessage.classList.remove('error');
-    accessMessage.innerHTML = `<strong>Access granted. Welcome to LOC.</strong>`;
+      // 5 ADA = 5,000,000 lovelace
+      tx.sendLovelace(GATE_RECIPIENT_ADDRESS, '5000000');
 
-    // For now, once paid, let them in immediately.
-    protectedArea.classList.remove('hidden');
-    gateOverlay.classList.add('hidden');
-  } catch (err) {
-    console.error('[LOC] payForLocAccess error:', err);
-    accessMessage.classList.add('error');
-    accessMessage.textContent =
-      'Payment failed or was rejected. No funds were taken. You can try again.';
-  } finally {
-    payAccessBtn.disabled = false;
-    payAccessBtn.textContent = 'Pay 5₳ for 30 days access';
-  }
-}
-
-document.addEventListener('DOMContentLoaded', detect);
-btn.addEventListener('click', connect);
-payAccessBtn.addEventListener('click', payForLocAccess);
-
-
-    async function connect() {
-      const walletId = sel.value; // e.g. "vespr", "nami", "eternl", etc.
-      if (!walletId) {
-        alert('Select a wallet');
-        return;
-      }
-
-      btn.disabled = true;
-      btn.textContent = 'Connecting…';
-
-      try {
-        // This should trigger the wallet’s normal permission / unlock UI
-        meshWallet = await BrowserWallet.enable(walletId);
+      if (!userAddress) {
         userAddress = await meshWallet.getChangeAddress();
-
-        btn.textContent = `Connected: ${walletId}`;
-        sel.disabled = true;
-
-        // Run the policy check right after connection
-        checkPolicyAssets();
-      } catch (e) {
-        console.error('Wallet connection failed:', e);
-
-        let humanMsg =
-          'Connection failed.\n\n' +
-          '• If your wallet uses a PIN/password, open the wallet extension/app and unlock it first.\n' +
-          '• Then come back here and press "Connect Wallet" again.';
-
-        if (e && e.message) {
-          humanMsg = `Connection failed: ${e.message}\n\n` + humanMsg;
-        }
-
-        alert(humanMsg);
-        btn.textContent = 'Connect Wallet';
-        btn.disabled = false;
       }
+      tx.setChangeAddress(userAddress);
+
+      const unsignedTx = await tx.build();
+      const signedTx   = await meshWallet.signTx(unsignedTx);
+      const txHash     = await meshWallet.submitTx(signedTx);
+
+      console.log('[LOC] Access payment tx hash:', txHash);
+
+      walletStatus.textContent = `LOC access paid. Tx: ${txHash}`;
+      accessMessage.classList.remove('error');
+      accessMessage.innerHTML = `<strong>Access granted. Welcome to LOC.</strong>`;
+
+      protectedArea.classList.remove('hidden');
+      gateOverlay.classList.add('hidden');
+    } catch (err) {
+      console.error('[LOC] payForLocAccess error:', err);
+      accessMessage.classList.add('error');
+      accessMessage.textContent =
+        'Payment failed or was rejected. No funds were taken. You can try again.';
+    } finally {
+      payAccessBtn.disabled = false;
+      payAccessBtn.textContent = 'Pay 5₳ for 30 days access';
     }
-  </script>
+  }
+
+  async function connect() {
+    const walletId = sel.value;
+    if (!walletId) {
+      alert('Select a wallet');
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Connecting…';
+
+    try {
+      meshWallet = await BrowserWallet.enable(walletId);
+      userAddress = await meshWallet.getChangeAddress();
+
+      btn.textContent = `Connected: ${walletId}`;
+      sel.disabled = true;
+
+      await checkPolicyAssets();
+    } catch (e) {
+      console.error('Wallet connection failed:', e);
+
+      let humanMsg =
+        'Connection failed.\n\n' +
+        '• If your wallet uses a PIN/password, open the wallet extension/app and unlock it first.\n' +
+        '• Then come back here and press "Connect Wallet" again.';
+
+      if (e && e.message) {
+        humanMsg = `Connection failed: ${e.message}\n\n` + humanMsg;
+      }
+
+      alert(humanMsg);
+      btn.textContent = 'Connect Wallet';
+      btn.disabled = false;
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', detect);
+  btn.addEventListener('click', connect);
+  payAccessBtn.addEventListener('click', payForLocAccess);
+</script>
 
 </body>
 </html>
