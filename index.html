@@ -566,7 +566,7 @@
   <div id="locGateContainer" class="loc-container">
     <header class="loc-header">
       <h2 class="loc-title">
-        Linkz <span class="loc-title-accent">(LOC)</span>
+        Linkz <span class="loc-title-accent"></span>
       </h2>
       <p class="loc-subtitle">
         Access granted via Linkz gate. Welcome in. ✨
@@ -575,7 +575,7 @@
 
     <section class="loc-status-block">
       <p id="locStatusMessage" class="loc-status loc-status-ok">
-        Access granted. Welcome to LOC.
+        Access granted. Welcome to Linkz.
       </p>
     </section>
 
@@ -584,7 +584,7 @@
         <!-- LEFT COLUMN: profile + editor -->
         <div class="loc-column">
           <div class="loc-card">
-            <h3>Your Linkz Profile</h3>
+            <h3>Linkz Profile</h3>
             <p><strong>Connected wallet:</strong> <span id="locWalletShort">–</span></p>
             <p><strong>Access type:</strong> <span id="locAccessType">–</span></p>
             <p><strong>Linkz policy ID:</strong> <code id="locPolicyId">–</code></p>
@@ -780,17 +780,26 @@ const GATE_RECIPIENT_ADDRESS =
   'addr1q9m2reerla2ccrkwz57rhwl7q8vj8y38x39nv4mq56ppjqmzs7jlke6nm3thlvvddtsnp52s62u0337y9h6d2gmma2wsmjx8nh';
 
 // =========================================================
-// Fre5h Fence / LOC holder access requirements
+// Pricing / Fees (edit ADA amounts here)
 // =========================================================
+const ACCESS_PASS_FEE_ADA   = 5; // gate fee for non-holders
+const INITIAL_MINT_FEE_ADA  = 5; // first Linkz mint
+const UPDATE_MINT_FEE_ADA   = 3; // subsequent updates
+
+const ACCESS_PASS_FEE_LOVELACE  = String(ACCESS_PASS_FEE_ADA  * 1_000_000);
+const INITIAL_MINT_FEE_LOVELACE = String(INITIAL_MINT_FEE_ADA * 1_000_000);
+const UPDATE_MINT_FEE_LOVELACE  = String(UPDATE_MINT_FEE_ADA  * 1_000_000);
+// =========================================================
+
+// Fre5h Fence / LOC holder access requirements
 const ACCESS_POLICIES = [
   {
     policyId: 'adc5716393953403109c335e68c0384238fd19653e960e03afa1fb1f',
-    minAssets: 5,
+    minAssets: 1,
     label: 'OG The Refresh',
     purchaseUrl: 'https://www.jpg.store/collection/therefresh'
   }
 ];
-// =========================================================
 
 // Standard social / site link types for Linkz
 const STANDARD_LINK_TYPES = [
@@ -839,7 +848,7 @@ function getPrimaryPurchaseUrl() {
 instructionsEl.textContent = `Connect a Cardano wallet to continue.`;
 gateBlurbEl.textContent =
   `If your wallet holds at least ${buildRequirementsLine()}, you have VIP LOC access. ` +
-  `Otherwise, you can unlock 30 days access for 5₳.`;
+  `Otherwise, you can unlock 30 days access for ${ACCESS_PASS_FEE_ADA}₳.`;
 
 async function detect() {
   try {
@@ -1336,8 +1345,8 @@ async function initLocApp(accessVia) {
   if (locStatus) {
     locStatus.textContent =
       accessVia === 'pass'
-        ? 'Access granted via paid LOC pass. Welcome to LOC.'
-        : 'Access granted via OG The Refresh. Welcome to LOC.';
+        ? 'Instructions will go here.'
+        : 'Instructions will go here.';
   }
 
   // Derive forging script & policy ID (wallet-bound open policy)
@@ -1383,7 +1392,7 @@ async function initLocApp(accessVia) {
   if (walletShortEl) walletShortEl.textContent = shortenAddress(userAddress);
   if (accessTypeEl) {
     accessTypeEl.textContent =
-      accessVia === 'pass' ? 'Paid LOC pass (5₳)' : 'OG The Refresh holder';
+      accessVia === 'pass' ? `Paid LOC pass (${ACCESS_PASS_FEE_ADA}₳)` : 'OG The Refresh holder';
   }
   if (policyEl) policyEl.textContent = policyId;
 
@@ -1555,7 +1564,18 @@ async function saveLocOnChain() {
     const existing = assets.filter(
       (a) => a.policyId === locPolicyId && a.assetName === assetName
     );
+    const isUpdate = existing.length > 0;
 
+    // Send mint fee to platform address (5₳ initial, 3₳ update)
+    const mintFeeLovelace = isUpdate
+      ? UPDATE_MINT_FEE_LOVELACE
+      : INITIAL_MINT_FEE_LOVELACE;
+
+    if (mintFeeLovelace && GATE_RECIPIENT_ADDRESS) {
+      tx.sendLovelace(GATE_RECIPIENT_ADDRESS, mintFeeLovelace);
+    }
+
+    // If token exists, burn it before reminting (same as previous behavior)
     if (existing.length > 0) {
       const burnAsset = {
         policyId: locPolicyId,
@@ -1584,7 +1604,8 @@ async function saveLocOnChain() {
     console.log('[Linkz] Saved Linkz token tx hash:', txHash);
 
     if (statusEl) {
-      statusEl.textContent = `Linkz saved on-chain. Tx: ${txHash}`;
+      const feeAda = isUpdate ? UPDATE_MINT_FEE_ADA : INITIAL_MINT_FEE_ADA;
+      statusEl.textContent = `Linkz saved on-chain (${feeAda}₳ mint fee). Tx: ${txHash}`;
     }
   } catch (err) {
     console.error('[Linkz] saveLocOnChain error:', err);
@@ -1631,7 +1652,7 @@ async function checkPolicyAssets() {
       accessMessage.classList.remove('error');
       accessMessage.innerHTML = `<strong>Access granted. Loading LOC…</strong>`;
 
-      // Hide the 5₳ button because they don't need it
+      // Hide the gate fee button because they don't need it
       payAccessBtn.style.display = 'none';
 
       // SHOW PROTECTED AREA, HIDE GATE
@@ -1650,7 +1671,7 @@ async function checkPolicyAssets() {
 
       if (passInfo && passInfo.status === 'active') {
         walletStatus.textContent =
-          `LOC access active (5₳ pass).\nExpires: ${passInfo.expiresOn}`;
+          `LOC access active (${ACCESS_PASS_FEE_ADA}₳ pass).\nExpires: ${passInfo.expiresOn}`;
 
         accessMessage.classList.remove('error');
         accessMessage.innerHTML =
@@ -1666,10 +1687,10 @@ async function checkPolicyAssets() {
 
       accessMessage.classList.add('error');
       accessMessage.innerHTML =
-        `You don’t yet meet the LOC holder requirements.<br>` +
+        `You don’t yet meet the Linkz holder requirements.<br>` +
         `<a href="${getPrimaryPurchaseUrl()}" target="_blank" rel="noopener noreferrer">
            Purchase Assets
-         </a> or Pay 5₳ for 30 days access below.`;
+         </a> or Pay ${ACCESS_PASS_FEE_ADA}₳ for 30 days access below.`;
 
       payAccessBtn.style.display = 'inline-flex';
     }
@@ -1697,12 +1718,12 @@ async function payForLocAccess() {
     payAccessBtn.disabled = true;
     payAccessBtn.textContent = 'Preparing payment…';
     accessMessage.classList.remove('error');
-    accessMessage.textContent = 'Building 5₳ LOC access transaction…';
+    accessMessage.textContent = `Building ${ACCESS_PASS_FEE_ADA}₳ LOC access transaction…`;
 
     const tx = new Transaction({ initiator: meshWallet });
 
-    // 5 ADA = 5,000,000 lovelace
-    tx.sendLovelace(GATE_RECIPIENT_ADDRESS, '5000000');
+    // gate fee in lovelace
+    tx.sendLovelace(GATE_RECIPIENT_ADDRESS, ACCESS_PASS_FEE_LOVELACE);
 
     if (!userAddress) {
       userAddress = await meshWallet.getChangeAddress();
@@ -1717,9 +1738,9 @@ async function payForLocAccess() {
 
     await logPaidAccess(txHash);
 
-    walletStatus.textContent = `LOC access paid. Tx: ${txHash}`;
+    walletStatus.textContent = `LOC access paid (${ACCESS_PASS_FEE_ADA}₳). Tx: ${txHash}`;
     accessMessage.classList.remove('error');
-    accessMessage.innerHTML = `<strong>Access granted. Welcome to LOC.</strong>`;
+    accessMessage.innerHTML = `<strong>Access granted. Welcome to Linkz.</strong>`;
 
     protectedArea.classList.remove('hidden');
     gateOverlay.classList.add('hidden');
@@ -1731,7 +1752,7 @@ async function payForLocAccess() {
       'Payment failed or was rejected. No funds were taken. You can try again.';
   } finally {
     payAccessBtn.disabled = false;
-    payAccessBtn.textContent = 'Pay 5₳ for 30 days access';
+    payAccessBtn.textContent = `Pay ${ACCESS_PASS_FEE_ADA}₳ for 30 days access`;
   }
 }
 
