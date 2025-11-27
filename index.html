@@ -33,13 +33,15 @@
 
     /* --- WALLET GATE OVERLAY --- */
     #gateOverlay {
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      z-index: 10;
-      display: flex;
-      flex-direction: column;
-    }
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;              /* ✅ allow scrolling */
+  -webkit-overflow-scrolling: touch; /* ✅ smooth scroll on mobile */
+}
 
     header {
       position: relative;
@@ -1813,3 +1815,4 @@ payAccessBtn.addEventListener('click', payForLocAccess);
 
 </body>
 </html>
+
